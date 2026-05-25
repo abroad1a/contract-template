@@ -16,6 +16,8 @@ abstract contract AccessManagementTemplate is Ownable {
     // 调试模式开关
     bool public debugMode = false;
 
+    string public name;
+
     // 调用者非此合约owner
     error AccessTemplate__NoOwnerPrivileges();
     // 调用者非此合约admin
@@ -40,6 +42,14 @@ abstract contract AccessManagementTemplate is Ownable {
             revert AccessTemplate__NoManagerPrivileges();
         }
         _;
+    }
+
+    constructor(string memory contractName) {
+        name = contractName;
+    }
+
+    function setContractName(string calldata newName) public virtual onlyAdmin {
+        name = newName;
     }
 
     // 调试用
@@ -183,10 +193,12 @@ abstract contract AccessManagementTemplate is Ownable {
     function getUserIdentities(
         address wallet
     ) public view virtual returns (bool[] memory) {
-        bool[] memory identities = new bool[](2);
+        bool[] memory identities = new bool[](3);
 
-        identities[0] = adminSet.contains(wallet);
-        identities[1] = managerSet.contains(wallet);
+        wallet == owner() ? identities[0] = true : identities[0] = false;
+
+        identities[1] = adminSet.contains(wallet);
+        identities[2] = managerSet.contains(wallet);
 
         return identities;
     }
