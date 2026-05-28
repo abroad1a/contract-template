@@ -38,7 +38,7 @@ abstract contract WithdrawTokenWithSignature is AccessManagementTemplate {
     bool public enableWithdraw = true;
     // 要提的token，设置为 address(0),表示要体现的是原生token
     // address public withdrawalToken = 0xdA25a2B5b4d8871D11d42F678931597057FB07C3;
-    address public withdrawalToken = address(0);
+    address public withdrawalToken;
     // 签名地址
     // address public withdrawSigner = 0x4eB1662C9Fe7a89E6cE7260B5F2DE6F9A3978f89;
     address public withdrawSigner = 0x47724e92f071D7809fe6A1eb11BBa99cE17C1E63; // wallet 6
@@ -72,6 +72,10 @@ abstract contract WithdrawTokenWithSignature is AccessManagementTemplate {
     );
 
     receive() external payable {}
+
+    constructor(address _withdrawToken) {
+        withdrawalToken = _withdrawToken;
+    }
 
     // 设置要提币的token
     function setWithdrawalToken(address _tokenAddr) public onlyAdmin {
