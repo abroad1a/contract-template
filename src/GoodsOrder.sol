@@ -229,7 +229,7 @@ contract GoodsOrder is AccessManagementTemplate, ReentrancyGuard {
                     Initializer/Constructor
     ------------------------------------------------------ */
 
-    constructor() {
+    constructor() AccessManagementTemplate("GoodsOrder") {
         // BSC Testnet
         feeWallet = 0x48330A28d09161d9DEca84eaf841EDbE1a0c508d; // wallet 2
         treasury = 0x50FaBeB2BA24b2022F2bfffE3B7FEfa0657dE562; // wallet 3

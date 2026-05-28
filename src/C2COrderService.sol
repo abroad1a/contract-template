@@ -186,7 +186,11 @@ contract C2COrderService is AccessManagementTemplate, ReentrancyGuard {
     /* ------------------------------------------------------
                     Initializer/Constructor
     ------------------------------------------------------ */
-    constructor(address _nete, address _usdt, address _miningMachine) {
+    constructor(
+        address _nete,
+        address _usdt,
+        address _miningMachine
+    ) AccessManagementTemplate("POS Withdrawl") {
         nete = _nete;
         miningMachineAddr = _miningMachine;
         // 将USDT统一为18位精度
